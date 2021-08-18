@@ -56,62 +56,72 @@ small,
 body {
 	background-color: #30221f;
 	color: #eee;
-	height: 100vh;
 	font-family: "Roboto Mono", monospace;
 }
 
 #root {
-	height: 100%;
 }
 
 .App {
 	display: flex;
-	height: 100%;
 	justify-content: center;
 	align-items: center;
 }
 
 .pomodoro {
 	display: flex;
-	height: 100%;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	button {
-		color: #ed5d40;
-		background: transparent;
-		border-width: 2px;
+}
+
+.btn {
+	color: #eee;
+	background: transparent;
+	border-width: 2px;
+	border-style: solid;
+	border-color: #eee;
+	position: relative;
+	margin: 1em;
+	display: inline-block;
+	padding: 0.5em 1em;
+	transition: all 0.3s ease-in-out;
+	font-size: 1.777rem;
+	&:before,
+	&:after {
+		content: "";
+		display: block;
+		position: absolute;
+		border-color: #eee;
+		box-sizing: border-box;
 		border-style: solid;
-		border-color: #ed5d40;
-		position: relative;
-		margin: 1em;
-		display: inline-block;
-		padding: 0.5em 1em;
+		width: 1em;
+		height: 1em;
 		transition: all 0.3s ease-in-out;
+	}
+	&:before {
+		top: -6px;
+		left: -6px;
+		border-width: 2px 0 0 2px;
+		z-index: 5;
+	}
+	&:after {
+		bottom: -6px;
+		right: -6px;
+		border-width: 0 2px 2px 0;
+	}
+
+	&:hover {
+		color: #353535;
+		background-color: #eee;
+		border-color: #eee;
 		&:before,
 		&:after {
-			content: "";
-			display: block;
-			position: absolute;
-			border-color: #ed5d40;
-			box-sizing: border-box;
-			border-style: solid;
-			width: 1em;
-			height: 1em;
-			transition: all 0.3s ease-in-out;
+			border-color: #eee;
 		}
-		&:before {
-			top: -6px;
-			left: -6px;
-			border-width: 2px 0 0 2px;
-			z-index: 5;
-		}
-		&:after {
-			bottom: -6px;
-			right: -6px;
-			border-width: 0 2px 2px 0;
-		}
+	}
 
+	&.start {
 		&:hover {
 			color: #353535;
 			background-color: #0a5744;
@@ -121,35 +131,44 @@ body {
 				border-color: #0a5744;
 			}
 		}
-
-		&.start {
-			&:hover {
-				color: #353535;
-				background-color: #0a5744;
-				border-color: #0a5744;
-				&:before,
-				&:after {
-					border-color: #0a5744;
-				}
-			}
-		}
-		&.pause {
-			&:hover {
-				color: #353535;
-				background-color: #b30c0c;
+	}
+	&.pause {
+		&:hover {
+			color: #353535;
+			background-color: #b30c0c;
+			border-color: #b30c0c;
+			&:before,
+			&:after {
 				border-color: #b30c0c;
-				&:before,
-				&:after {
-					border-color: #b30c0c;
-				}
 			}
 		}
 	}
 }
 
 .progress {
-	span {
-		padding: 5px;
+	position: relative;
+	padding: 0 10px;
+	color: #000000;
+	list-style: none;
+
+	&::before {
+		content: "";
+		position: absolute;
+		height: 40%;
+		width: 100%;
+		border-radius: 20px;
+		background: #eee;
+		bottom: 30%;
+		left: 0;
+	}
+	li {
+		padding: 5px 10px;
+		margin: 0 10px;
+		display: inline;
+		background: #353535;
+		border-radius: 50%;
+		color: #eee;
+		position: relative;
 	}
 	.compeleted {
 		background-color: #0a5744;
@@ -157,8 +176,31 @@ body {
 	.still {
 		background-color: #353535;
 	}
+
+	.done {
+		border-radius: 5px;
+	}
 }
 
-.settings * {
-	margin: 10px;
+.settings {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 1rem;
+	min-width: 180px;
+	text-align: end;
+	svg {
+		font-size: 2rem;
+		background-color: #ed5d40;
+		border-radius: 50%;
+		padding: 0.1em;
+	}
+	div {
+		margin: -2rem 0 0 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: #ed5d40;
+		border-radius: 10px 0 10px 10px;
+	}
 }

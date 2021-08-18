@@ -1,10 +1,15 @@
 import React from "react";
 
 export const Buttons = (props) => (
-	<button
-		className={props.started ? "pause" : "start"}
-		onClick={() => props.setStarted(!props.started)}
-	>
-		<h4>{props.started ? "Pause" : "Start"}</h4>
-	</button>
+	<div className="buttons">
+		<button className="btn reset" onClick={() => props.reset()}>
+			Reset
+		</button>
+		<button
+			className={props.started ? "btn pause" : "btn start"}
+			onClick={() => props.setStarted(!props.started)}
+		>
+			{props.started ? "Pause" : "Start"}
+		</button>
+	</div>
 );

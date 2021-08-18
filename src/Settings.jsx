@@ -1,6 +1,7 @@
 import React from "react";
 import NumberFormat from "react-number-format";
 import { formatTime } from "./App";
+import { RiSettings3Fill } from "react-icons/ri";
 
 const TimeInput = ({ value, set }) => (
 	<NumberFormat
@@ -19,38 +20,66 @@ const TimeInput = ({ value, set }) => (
 	/>
 );
 
-export const Settings = ({ options, setOptions, acceptOptions }) => (
-	<div className="settings">
-		Settings: Work
+const SettingsList = (props) => (
+	<div>
+		Work
 		<TimeInput
-			value={options.work}
+			value={props.options.work}
 			set={(val) => {
-				setOptions({
-					...options,
-					work: val,
-				});
+				props.setOptions({ ...props.options, work: val });
+				localStorage.setItem("work", val);
 			}}
 		/>
 		Break
 		<TimeInput
-			value={options.break}
+			value={props.options.break}
 			set={(val) => {
-				setOptions({
-					...options,
-					break: val,
-				});
+				props.setOptions({ ...props.options, break: val });
+				localStorage.setItem("break", val);
 			}}
 		/>
 		Long break
 		<TimeInput
-			value={options.long}
+			value={props.options.long}
 			set={(val) => {
-				setOptions({
-					...options,
-					long: val,
-				});
+				props.setOptions({ ...props.options, long: val });
+				localStorage.setItem("long", val);
 			}}
 		/>
-		<button onClick={(e) => acceptOptions()}>Accept</button>
+		Long invertal
+		<input
+			type="number"
+			value={props.options.longInvertal}
+			max="8"
+			min="1"
+			onChange={(e) => {
+				let val = Number(e.target.value);
+				props.setOptions({
+					...props.options,
+					longInvertal: val,
+				});
+				localStorage.setItem("longInvertal", val);
+			}}
+		></input>
+		<button onClick={(e) => props.acceptOptions()}>Accept</button>
+	</div>
+);
+
+export const Settings = ({ options, setOptions, acceptOptions }) => (
+	<div className="settings">
+		<RiSettings3Fill
+			onClick={() => {
+				setOptions({ ...options, showSettings: !options.showSettings });
+			}}
+		/>
+		{options.showSettings ? (
+			<SettingsList
+				options={options}
+				setOptions={setOptions}
+				acceptOptions={acceptOptions}
+			></SettingsList>
+		) : (
+			""
+		)}
 	</div>
 );

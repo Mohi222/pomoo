@@ -5,19 +5,23 @@ import { Progress } from "./Progress";
 import { Title } from "./Title";
 import { Buttons } from "./Buttons";
 import { Settings } from "./Settings";
+const getStorageItem = (item) => {
+	return Number(localStorage.getItem(item));
+};
 
 const Pomodoro = () => {
 	const [options, setOptions] = useState({
-		work: 1500,
-		break: 300,
-		long: 900,
-		longInvertal: 4,
+		work: getStorageItem("work") || 1500,
+		break: getStorageItem("break") || 300,
+		long: getStorageItem("long") || 900,
+		longInvertal: getStorageItem("longInvertal") || 8,
+		showSettings: false,
 	});
 	const [time, setTime] = useState(options.work);
 	const [started, setStarted] = useState(false);
 	const [session, setSession] = useState("work");
 	const [compeleted, setCompeleted] = useState(0);
-	const [remained, setRemained] = useState(4);
+	const [remained, setRemained] = useState(options.longInvertal);
 
 	const changeSession = () => {
 		if (session == "work") {
@@ -33,15 +37,23 @@ const Pomodoro = () => {
 		} else {
 			setSession("work");
 			setTime(options.work);
-			if (remained === 0) setRemained(4);
+			if (remained === 0) setRemained(options.longInvertal);
 		}
 
 		showNotification(`time for ${session}`);
 	};
 
+	const reset = () => {
+		setStarted(false);
+		setCompeleted(0);
+		setRemained(options.longInvertal);
+		setSession("work");
+		setTime(options.work);
+	};
+
 	const acceptOptions = () => {
 		setStarted(false);
-		console.log(options);
+		setRemained(options.longInvertal);
 		switch (session) {
 			case "work":
 				setTime(options.work);
@@ -77,8 +89,16 @@ const Pomodoro = () => {
 		<div className="pomodoro">
 			<Title session={session}></Title>
 			<Time time={time}></Time>
-			<Progress compeleted={compeleted} remained={remained}></Progress>{" "}
-			<Buttons started={started} setStarted={setStarted}></Buttons>
+			<Progress
+				compeleted={compeleted}
+				remained={remained}
+				longInvertal={options.longInvertal}
+			></Progress>{" "}
+			<Buttons
+				started={started}
+				setStarted={setStarted}
+				reset={reset}
+			></Buttons>
 			<Settings
 				options={options}
 				setOptions={setOptions}

@@ -1,0 +1,18 @@
+# Todo
+
+- Export components {cm}
+- Style progress bar {cm}
+- history
+- reset button {cm}
+- Settings
+  - Move settings to another tab {cm}
+  - Save settings to localStorage {cm}
+  - style inputs
+  - Add settings
+    - times {cm}
+    - long break invertal {cm}
+    - notification
+    - sound
+- Sounds
+- Add Typescript
+- Theme
